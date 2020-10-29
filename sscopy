@@ -1,0 +1,45 @@
+#! /bin/bash
+location="/tmp"
+name="sscopy.png"
+notifyTime=150
+
+function helpOut() {
+	echo "	./sscopy 		"
+	echo " 		-l 	location of file to save"
+	echo " 		-n 	name of file			"
+	echo " 		-t 	time of notify (ms)		"
+	echo " 		-h 	show this message		"
+	exit 0
+}
+
+while getopts :l:n:t:h flag
+do 
+	case "${flag}" in 
+		l)location=${OPTARG};;
+		n)name=${OPTARG};;
+		t)notifyTime=${OPTARG};;
+		h)helpOut 
+
+	
+	esac
+done
+if [ $location == '.' ];then
+	echo dotttt
+	path=`pwd`/${name}
+else 
+	path="${location}/${name}"
+fi
+
+
+echo "saved to: ${path}"
+
+scrot -s  "$path"
+xclip -selection clipboard -t image/png -i ${path}
+if [ $path != "/tmp/sscopy.png" ];then
+	notify-send -t $notifyTime "copied to $path"
+else
+	rm /tmp/sscopy.png
+	notify-send -t $notifyTime "copied to clipboard"
+	
+fi
+exit 0
