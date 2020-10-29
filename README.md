@@ -2,6 +2,6 @@
 auto screenshot and paste to clipboard
 
 ## Dependencies
--scrot
--xclip
--notify-send
+-scrot\
+-xclip\
+-notify-send\
